@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="card-header bg-primary text-white text-center">
+      <h3>PART EDIT PAGE</h3>
+    </div>
+    <div class="card-body">
+      <form th:action="@{/part/update}" method="POST"  th:object="${part}">
+         <div class="row">
+           <!-- Row#1 -->
+           <div class="col-2">
+             <label>ID</label>
+           </div>
+           <div class="col-4">
+             <input type="text" th:field="*{id}" readonly="readonly">
+           </div>
+           <div>
+             <span id="partCodeError"></span>
+           </div>
+          </div>
+         <br>
+         
+        
+        <div class="row">
+          <!-- Row#2 -->
+          <div class="col-2">
+            <label for="partCode">PartCode</label>
+          </div>
+          <div class="col-4">
+            <input type="text" th:field="*{partCode}" class="form-control">
+          </div>
+          <div>
+            <span id="partCodeError"></span>
+          </div>
+         </div>
+         <br>
+         
+         <div class="row">
+          <!-- Row#3 -->
+          <div class="col-2">
+            <label for="partWidth">Width</label>
+          </div>
+          <div class="col-4">
+            <input type="text" th:field="*{partWidth}">
+          </div>
+          <div class="col-6">
+            <span id="partWidthError"></span>
+          </div>
+          <!-- Row#2 -->
+          <div class="col-2">
+            <label for="partLength">Length</label>
+          </div>
+          <div class="col-4">
+            <input type="text" th:field="*{partLength}">
+          </div>
+          <div class="col-6">
+            <span id="partLengthError"></span>
+          </div> 
+          <!-- Row#2 -->
+          <div class="col-2">
+            <label for="partHeight">Height</label>
+          </div>
+          <div class="col-4">
+            <input type="text" th:field="*{partHeight}">
+          </div>
+          <div class="col-6">
+            <span id="partHeightError"></span>
+          </div>
+        </div>
+        <br>
+        
+        <div class="row">
+          <!-- Row#3 -->
+          <div class="col-2">
+            <label for="baseCost">Base Cost</label>
+          </div>
+          <div class="col-4">
+            <input type="text" th:field="*{baseCost}" class="form-control">
+          </div>
+          <div class="col-6">
+            <span id="baseCostError"></span>
+          </div>
+        </div>
+        <br>
+                
+        <div class="row">
+          <!-- Row#4 -->
+          <div class="col-2">
+            <label for="baseCurrency">Base Currency</label>
+          </div>
+          <div class="col-4">
+            <select th:field="*{baseCurrency}">
+              <option value=" ">--Select--</option>
+              <option value="INR">INR</option>
+              <option value="USD">USD</option>
+              <option value="AUS">AUS</option>
+              <option value="ERU">ERU</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <span id="baseCurrencyError"></span>
+          </div>
+        </div>
+        <br>
+        
+        <div class="row">
+          <!-- Row#4 -->
+          <div class="col-2">
+            <label for="description">Description</label>
+          </div>
+          <div class="col-4">
+            <textarea th:field="*{description}" class="form-control"></textarea>
+          </div>
+          <div class="col-6">
+            <span id="descriptionError"></span>
+          </div>
+        </div>
+        <input type="submit" value="Update" class="btn btn-success">
+      
+      </form>
+    </div>
+    <div class="card-footer bg-info text-white text-center"></div>
+  </div>
+</div>
+
+</body>
+</html>

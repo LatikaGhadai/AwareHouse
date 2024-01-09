@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="card">
+  <div class="card-header bg-primary text-white text-center">
+    <h3>PURCHER ORDER EDIT PAGE</h3>
+  </div>
+  <div class="card-body">
+    <form th:action="@{/purchaseOrd/update}" method="POST" th:object="${purchaseOrder}"> 
+      <!-- row#1 -->
+      <div class="row">
+        <div class="col-2">
+          <label for="orderId">Order ID</label>
+        </div>
+        <div class="col-4">
+          <input type="text" th:field="*{id}" class="form-control" readonly="readonly">
+        </div>
+        <div class="col-6">
+        </div>
+       </div>
+       <br>
+     <!-- row#1 -->
+      <div class="row">
+        <div class="col-2">
+          <label for="orderCode">Order Code</label>
+        </div>
+        <div class="col-4">
+          <input type="text" th:field="*{orderCode}" class="form-control">
+        </div>
+        <div class="col-6">
+          <span id="orderCodeError"></span> 
+        </div>
+       </div>
+       <br>
+       <!-- Integration -->
+					<!-- row#2 -->
+					<div class="row">
+						<div class="col-2">
+							<label>Shipment Code</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{shipmentType.id}" id="shipmentType" class="form-control">
+							  <option value="">-Select-</option>
+							  <option th:each="ob:${shipmentTypes}" th:value="${ob.key}" th:text="${ob.value}"></option>
+							</select>
+						</div>
+						<div class="col-6">
+							<span id="shipmentTypeError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- Integration -->
+					<!-- row#2 -->
+					<div class="row">
+						<div class="col-2">
+							<label>Vendor</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{vendor.id}" id="vendor" class="form-control">
+							  <option value="">-Select-</option>
+							  <option th:each="ob:${whUsertypes}" th:value="${ob.key}" th:text="${ob.value}"></option>
+							</select>
+						</div>
+						<div class="col-6">
+							<span id="vendorTypeError"></span>
+						</div>
+					</div>
+					<br>
+     <!-- row#3 -->
+      <div class="row">
+        <div class="col-2">
+          <label for="referenceNo">Reference No</label>
+        </div>
+        <div class="col-4">
+          <input type="text" th:field="*{referenceNo}" class="form-control">
+        </div>
+        <div class="col-6">
+          <span id="referenceNoError"></span> 
+        </div>
+       </div>
+       <br>
+      <!-- row#3 -->
+      <div class="row">
+        <div class="col-2">
+          <label for="qualityCheck">Quality Check</label>
+        </div>
+        <div class="col-4">
+          <input type="radio" th:field="*{qualityCheck}" value="Required">Required
+           <input type="radio" th:field="*{qualityCheck}" value="Not Required">Not Require                  
+        </div>
+        <div class="col-6">
+          <span id="qualityCheckError"></span> 
+        </div>
+       </div>
+       <br>
+      <!-- row#4 -->
+      <div class="row">
+        <div class="col-2">
+          <label for="defaultStatus">Default Status</label>
+        </div>
+        <div class="col-4">
+        <select th:field="*{defaultStatus}">
+            <option th:value="OPEN" th:text="Open"></option>
+        </select>        
+        </div>
+        <div class="col-6">
+          <span id="defaultStatusError"></span> 
+        </div>
+       </div>
+       <br>
+     <!-- row#5 -->
+      <div class="row">
+        <div class="col-2">
+          <label for="description">Description</label>
+        </div>
+        <div class="col-4">
+          <textarea th:field="*{description}" class="form-control"></textarea>
+        </div>
+        <div class="col-6">
+          <span id="descriptionError"></span> 
+        </div>
+       </div>
+       <br>
+       <input type="submit" class="btn btn-success" value="Order"/> 
+    </form>
+  </div>
+<div th:if="${message!=0}">
+  <div class="card-footer bg-info text-white text-center">
+    <b><span th:text="${message}"></span></b>
+  </div> 
+</div>
+  
+  
+</div>
+</div>
+</body>
+</html>

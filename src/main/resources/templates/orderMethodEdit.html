@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="card">
+  <div class="card-header bg-primary text-white text-center">
+    <h3>ORDER METHOD REGISTER</h3>
+  </div>
+  <div class="card-header"></div>
+  <div class="card-body">
+    <form th:action="@{/orderMethod/update}" method="POST"  th:object="${orderMethod}">
+     <div class="row">
+     <!-- Row#1 -->
+       <div class="col-2">
+         <label for="orderId">OrderId</label>
+       </div>
+       <div class="col-4">
+         <input th:field="*{id}"  readonly="readonly">
+       </div>
+       <div class="col-6">
+       
+       </div>
+       <!-- Row#2 -->
+       <div class="col-2">
+         <label for="orderMode">orderMode</label>
+       </div>
+       <div class="col-4">
+         <input type="radio" th:field="*{orderMode}" value="Sale">Sale
+         <input type="radio" th:field="*{orderMode}" value="Purches">Purches
+       </div>
+       <div class="col-6">
+         <span id="orderModeError"></span>
+       </div>
+       <!-- Row#3 -->
+       <div class="col-2">
+         <label for="orderCode">OrderCode</label>
+       </div>
+       <div class="col-4">
+         <input type="text" th:field="*{orderCode}" class="for-control">
+       </div>
+       <div class="col-6">
+         <span id="orderCodeError"></span>
+       </div>
+       <!-- Row#4 -->
+       <div class="col-2">
+         <label for="orderType">OrderType</label>
+       </div>
+       <div class="col-4">
+         <select th:field="*{orderType}">
+                   <option value=" ">--Select--</option>
+                   <option value="FIFO">FIFO</option>
+                   <option value="LIFO">LIFO</option>
+                   <option value="FCFO">FCFO</option>
+                   <option value="FEFO">FEFO</option>
+                   </select> 
+       </div>
+       <div class="col-6">
+         <span id="orderTypeError"></span>
+       </div>
+       <!-- Row#5 -->
+       <div class="col-2">
+         <label for="orderAccept">OrderAccept</label>
+       </div>
+       <div class="col-4">
+         <input type="checkbox" th:field="*{orderAccept}" value="multi-model">
+         <input type="checkbox" th:field="*{orderAccept}" value="AcceptReturn">
+       </div>
+       <div class="col-6">
+         <span id="orderAcceptError"></span>
+       </div>
+       <!-- Row#6 -->
+       <div class="col-2">
+         <label for="description">Descrption</label>
+       </div>
+       <div class="col-4">
+         <textarea th:field="*{description}" class="for-control"></textarea>
+       </div>
+       <div class="col-6">
+         <span id="descriptionError"></span>
+       </div>
+       <input type="submit" class="btn btn-success" value="Create Order Method"/> 
+      </div>
+    </form>
+  </div>
+  <div class="card-footer bg-primary">
+  <!-- <div th:if="${message!=null}">
+    <div class="card-footer bg-info text-white text-center">
+      <b><span th:text="${message}"></span></b>
+    </div> -->
+  </div>
+</div>
+</div>
+</body>
+</html>

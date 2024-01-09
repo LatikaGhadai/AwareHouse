@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="card"> 
+    <div class="card-header bg-primary text-white text-center">
+      <h3>Welcome To Shipment Type Register</h3>
+    </div>
+   <div class=card-header></div>
+    <div class=card-body>
+      <form th:action="@{/shipmentType/update}" method="POST" th:object="${ShipmentType}">
+       <!-- Row#1 -->
+       <div class="row">
+          <div class="col-2">
+            <label for="shipmentId">shipmentId</label>
+          </div>
+          <div class="col-4">
+            <input th:field="*{id}" readonly="readonly"/>
+          </div>
+          <div class="col-6">
+          
+          </div>
+          </div>
+      <!-- Row#2 -->
+          <div class="row">
+          <div class="col-2">
+            <label for="shipmentMode">shipmentMode</label>
+          </div>
+          <div class="col-4">
+            <select th:field="*{shipmentMode}"class="form-control">
+                <option value="">--SELECT--</option>
+                <option value="Air">Air</option>
+                <option value="Truck">Truck</option>
+                <option value="Ship">Ship</option>
+                <option value="Train">Train</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <span id="shipmentModeError"></span>
+          </div>
+          </div>
+         <!--   Row#3 -->
+          <div class="row">
+          <div class="col-2">
+            <label for="shipmentCode">ShipmentCode</label>
+          </div>
+          <div class="col-4">
+            <!-- <textarea th:field="*{shipmentCode}" class="for-control"></textarea> -->
+            <input type="text" th:field="*{shipmentCode}" class="for-control">
+          </div>
+          <div class="col-6">
+            <span id="shipmentCodeError"></span>
+          </div>
+          </div>
+          <!-- Row#4 -->
+          <div class="row">
+          <div class="col-2">
+            <label for="enableShipment">EnableShipment</label>
+          </div>
+          <div class="col-4">
+            <select th:field="*{enableShipment}">
+               <option value=" ">-SELECT-</option>
+               <option value="YES">YES</option>
+               <option value="NO">NO</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <span id="enableShipmentError"></span>
+          </div>
+          </div>
+         <!-- Row#5 -->
+          <div class="row">
+          <div class="col-2">
+            <label for="shipmentGrade">ShipmentGrade</label>
+          </div>
+          <div class="col-4">
+              <input type="radio" th:field="*{shipmentGrade}" value="A"/>A
+              <input type="radio" th:field="*{shipmentGrade}" value="B"/>B
+              <input type="radio" th:field="*{shipmentGrade}" value="C"/>c
+          </div>
+          <div class="col-6">
+            <span id="shipmentGradeError"></span>
+          </div>
+        </div>
+        <!-- Row#6 -->
+        <div class="row">
+        <div class="col-2">
+          <label for="description">Description</label>
+        </div>
+        <div class="col-4">
+          <textarea th:field="*{description}" class="for-control"></textarea>
+        </div>
+        <div class="col-6">
+          <span id="description"></span>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-success" value="Ceate Shipment">
+   </form>
+    </div>
+  <div th:if="${message!=null}">
+    <div class="card-footer bg-info text-white text-center">
+      <b><span th:text="${message}"></span></b>
+    </div>
+  </div> 
+  
+  </div>
+  </div>
+</body>
+</html>
+
+
+
+
+ 
+
+
+<!-- <!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+  <body>
+    <h1 style="color:Red">Welcome To Shipment Type Register</h1>
+    
+    <form th:action="@{/shipmentType/update}" method="POST" th:object="${ShipmentType}">
+      <pre>
+      
+      Shipment ID:<input th:field="*{id}" readonly="readonly"/>
+      
+        Shipment Mode : <select th:field="*{shipmentMode}">
+          <option value="">--SELECT--</option>
+          <option value="Air">Air</option>
+          <option value="Truck">Truck</option>
+          <option value="Ship">Ship</option>
+          <option value="Train">Train</option>
+        </select>
+        
+        Shipment Code: : <input type="text" th:field="*{shipmentCode}">
+       
+       Enable Shipment : <select th:field="*{enableShipment}">
+         <option value=" "></option>
+         <option value="YES">YES</option>
+         <option value="NO">NO</option>
+       </select>
+       name="shipmentGrade"
+       Shipment Grade : <input type="radio"th:field="*{shipmentGrade}" value="A"/>A
+                        <input type="radio"th:field="*{shipmentGrade}" value="B"/>B
+                        <input type="radio"th:field="*{shipmentGrade}" value="C"/>c
+                        
+       Description : <textarea th:field="*{description}"></textarea>
+       
+       <input type="submit" value="Ceate Shipment">
+      </pre>
+    </form>
+    <span th:text="${message}"></span>
+  </body>
+
+</html> -->

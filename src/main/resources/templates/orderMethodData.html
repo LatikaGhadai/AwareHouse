@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="fragments/commonui :: usermenu"></div>
+<div class="container">
+<div class="card">
+  <div class="card-header bg-primary text-white text-center">
+    <h3>ORDER METHOD REGISTER</h3>
+  </div>
+  <div class="card-header">  </div>
+  <div class="card-body">
+  <a th:href="@{/orderMethod/excel}"><img th:src="@{/images/excel.jpeg}" class="btn btn-info" width="80" height="60"></a>
+  <table class="table bg-dark text-white">
+    <tr bgcolor="green">
+      <th>ID</th>
+      <th>MODE</th>
+      <th>CODE</th>
+      <th>TYPE</th>
+      <th>ACCEPT</th>
+      <th>DESCRIPTION</th>
+      <th>OPERATION</th>
+    </tr> 
+    <tr th:each="ob:${list}">
+    <td th:text="${ob.id}"></td>
+      <td th:text="${ob.orderMode}"></td>
+      <td th:text="${ob.orderCode}"></td>
+      <td th:text="${ob.orderType}"></td>
+      <td th:text="${ob.orderAccept}"></td>
+      <td th:text="${ob.description}"></td>
+      <td><a th:href="@{/orderMethod/delete/{id}(id=${ob.id})}"><img th:src="@{/images/delete.jpg}" class="btn btn-danger" width="60" height="40"></a>
+      <a th:href="@{/orderMethod/edit/{id}(id=${ob.id})}"><img th:src="@{/images/edit1.png}" class="btn btn-success" width="60" height="40"></a>
+      <a th:href="@{/orderMethod/view/{id}(id=${ob.id})}"><img th:src="@{/images/view.png}" class="btn btn-primary" width="60" height="40"></a>
+      <a th:href="@{/orderMethod/excel/{id}(id=${ob.id})}" class="btn btn-info">Excel</a></td>
+    </tr>
+  </table>
+  </div>
+  <!-- <span th:text="${message}"></span> -->
+  <div th:if="${message!=null}">
+    <div class="card-footer bg-info text-white text-center">
+      <b><span th:text="${message}"></span></b>
+    </div>
+  </div>
+ </div>
+</div>
+<!--   <span th:text="${message}"></span> -->
+ </body>
+</html>

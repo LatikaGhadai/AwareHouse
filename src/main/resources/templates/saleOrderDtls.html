@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery  .slim-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="fragments/commonui :: usermenu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h3>SALE ORDER DETAILS</h3>
+			</div>
+			<div class="card-body">
+			    <table>
+			      <tr>
+			        <th>Order Code</th>
+			        <th><input th:field="*{so.orderCode}" readonly="readonly" class="form-control"></th>
+			        <th>&emsp;&emsp;Status</th>
+			        <th><input th:field="*{so.status}" readonly="readonly" class="form-control"></th>
+			      </tr>
+			     </table>
+			     <hr/>
+			      <div>
+			        <h3>ADD ITEM TO CART</h3>
+			      </div>
+			      <hr>
+			      <form th:action="@{/saleOrder/addItem}" method="POST" th:object="${saleDtls}">
+			        <input type="hidden" th:field="*{so.id}"/>
+			      <div class="row">
+			        <div class="col-1.5">
+			          <label>Select Item</label>
+			        </div>
+			        <div class="col-3">
+			          <select th:field="*{part.id}" class="form-control">
+			            <option value="">-Select-</option>
+			            <option th:each="ob:${parts}" th:value="${ob.key}" th:text="${ob.value}"></option>
+			          </select>
+			        </div>
+			        <div class="col-1.5">
+			           <label>Quantity</label>
+			        </div>
+			        <div class="col-3">
+			            <input type="text" th:field="*{qty}" class="form-control"/>
+			        </div>
+			        <div class="col-1">
+			          <input type="submit" class="btn btn-success" value="add"/>
+			        </div>
+			      </div>
+			  </form>
+			</div>
+	
+	       <div class="card-footer">
+	         <table class="table">
+	           <tr>
+	             <th>SlNo</th>
+	             <th>ITEM</th>
+	             <th>BASE COST</th>
+	             <th>QUANTITY</th>
+	           </tr>
+	         </table>
+	       </div>
+	
+	
+	</div>
+</div>
+</body>
+</html>

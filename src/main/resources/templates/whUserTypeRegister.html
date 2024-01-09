@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="fragments/commonui :: usermenu"></div>
+<div class="container">
+<div class="card">
+  <div class="card-header bg-primary text-white text-center">
+    <h3>WH USER TYPE REGISTER</h3>
+  </div>
+  <div class="card-body">
+    <form id="whUserForm" th:action="@{/whUserType/save}" method="POST" th:object="${whUserType}"> 
+      <!-- row#1 -->
+      <div class="row">
+        <div class="col-2">
+          <label for="userType">User Type</label>
+        </div>
+        <div class="col-4">
+          <input type="radio" th:field="*{userType}" value="Vendor">Vendor
+          <input type="radio" th:field="*{userType}" value="Customer">Customer 
+        </div>
+        <div class="col-6">
+          <span id="userTypeError"></span> 
+        </div>
+       </div>
+       <br>
+       <!-- Row#2 -->
+       <div class="row">
+         <div class="col-2">
+           <label for="userCode">User Code </label>
+         </div>
+         <div class="col-4">
+           <input type="text" th:field="*{userCode}" class="form-control">          
+         </div>
+         <div class="col-6">
+           <span id="userCodeError"></span>
+         </div>
+       </div>
+       <br>
+       <!-- Row#3 -->
+       <div class="row">
+         <div class="col-2">
+           <label for="userFor">User For </label>
+         </div>
+         <div class="col-4">
+           <input type="text" th:field="*{userFor}" class="form-control" readonly>          
+         </div>
+         <div class="col-6">
+           <span id="userForError"></span>
+         </div>
+       </div>
+       <br>
+        <!-- Row#4 -->
+       <div class="row">
+         <div class="col-2">
+           <label for="userEmail">User Email Id </label>
+         </div>
+         <div class="col-4">
+           <input type="text" th:field="*{userEmail}" class="form-control">          
+         </div>
+         <div class="col-6">
+           <span id="userEmailError"></span>
+         </div>
+       </div>
+       <br>
+       <!-- Row#5 -->
+       <div class="row">
+         <div class="col-2">
+           <label for="userContact">User Contact </label>
+         </div>
+         <div class="col-4">
+           <textarea th:field="*{userContact}" class="form-control"></textarea>       
+         </div>
+         <div class="col-6">
+           <span id="userContactError"></span>
+         </div>
+       </div>
+       <br>
+        <!-- Row#6 -->
+       <div class="row">
+         <div class="col-2">
+           <label for="userIdType">User Id Type </label>
+         </div>
+         <div class="col-4">
+           <select th:field="*{userIdType}" class="form-control">
+                <option value="">--Select--</option>
+                <option value="Pan Card">PAN CARD</option>
+                <option value="Aadhar Card">AADHAR CARD</option>
+                <option value="Voter Card">VOTER CARD</option>
+                <option value="Other">OTHER</option>
+           </select>          
+         </div>
+         <div class="col-6">
+           <span id="userIdTypeError"></span>
+         </div>
+       </div>
+       <br>
+       <!-- Row#7 -->
+       <div class="row">
+         <div class="col-2">
+           <label for="ifOther">Other </label>
+         </div>
+         <div class="col-4">
+           <input type="text" th:field="*{ifOther}" class="form-control" readonly>          
+         </div>
+         <div class="col-6">
+           <span id="ifOtherError"></span>
+         </div>
+       </div>
+       <br>
+       <!-- Row#7 -->
+       <div class="row">
+         <div class="col-2">
+           <label for="idNumber">Id Number </label>
+         </div>
+         <div class="col-4">
+           <input type="text" th:field="*{idNumber}" class="form-control">          
+         </div>
+         <div class="col-6">
+           <span id="idNumberError"></span>
+         </div>
+       </div>
+       <br>
+       <input type="submit" class="btn btn-success" value="Register"/> 
+    </form>
+  </div>
+  <div class="card-footer bg-info text-white text-center"></div>
+</div>
+</div>
+<script>
+
+$(document).ready(function(){
+	
+	$("#userTypeError").hide();
+	$("#userCodeError").hide();
+	$("#userEmailError").hide();
+	$("#userContactError").hide();
+	$("#userIdTypeError").hide();
+	//$("#ifOtherError").hide();
+	$("#idNumberError").hide();
+	
+	var userTypeError=false;
+	var userCodeError=false;
+	var userEmailError=false;
+	var userContactError=false;
+	var userIdTypeError=false;
+	//var ifOtherError=false;
+	var idNumberError=false;
+	
+	$("#userType").change(function(){
+		validate_userType();
+	})
+	
+	$("#userCode").keyup(function(){
+		validate_userCode();
+	})
+	
+	$("#userEmail").keyup(function(){
+		validate_userEmail();
+	})
+	$("#userContact").keyup(function(){
+		validate_userContact();
+	})
+	$("#userIdType").change(function(){
+		validate_userIdType();
+	})
+	/*$("#ifOther").keyup(function(){
+		validate_ifOther();
+	})*/
+	$("#idNumber").keyup(function(){
+		validate_idNumber();
+	})
+	
+	function validate_userType(){
+		 var len= $('input[type="radio"][name="userType"]:checked').length;
+		 if(len==0){
+			 $("#userTypeError").show();
+			 $("#userTypeError").html("Choose<b> User type</b>");
+			 $("#userTypeError").css("color","red");
+			 userTypeError=false;
+		    }
+		  else{
+			  $("#userTypeError").hide();
+			  userTypeError=true;
+		   }
+		   return userTypeError;
+	   }
+   
+	function validate_userCode(){
+		 var val=$("#userCode").val();
+		 if(val==''){
+			 $("#userCodeError").show();
+			 $("#userCodeError").html("User Code<b> is Required</b>");
+			 $("#userCodeError").css("color","red");
+			 userCodeError=false;
+		    }
+		  else{
+			  $("#userCodeError").hide();
+			  userCodeError=true;
+		   }
+		   return userCodeError;
+	}
+    
+	function validate_userEmail(){
+		var val=$("#userEmail").val();
+		 if(val==''){
+			 $("#userEmailError").show();
+			 $("#userEmailError").html("Email<b> is Required</b>");
+			 $("#userEmailError").css("color","red");
+			 userEmailError=false;
+		    }
+		  else{
+			  $("#userCodeError").hide();
+			  userEmailError=true;
+		   }
+		   return userEmailError;
+	}
+    
+	function validate_userContact(){
+		var val=$("#userContact").val();
+		 if(val==''){
+			 $("#userContactError").show();
+			 $("#userContactError").html("Contact<b> is Required</b>");
+			 $("#userContactError").css("color","red");
+			 userContactError=false;
+		    }
+		  else{
+			  $("#userContactError").hide();
+			  userContactError=true;
+		   }
+		   return userContactError;
+	}
+   
+	function validate_userIdType(){
+		var val=$("#userIdType").val();
+		 if(val==''){
+			 $("#userIdTypeError").show();
+			 $("#userIdTypeError").html("Select<b> Id is Required</b>");
+			 $("#userIdTypeError").css("color","red");
+			 userIdTypeError=false;
+		    }
+		  else{
+			  $("#userIdTypeError").hide();
+			  userIdTypeError=true;
+		   }
+		   return userIdTypeError;
+	}
+    
+	function validate_idNumber(){
+		var val=$("#idNumber").val();
+		 if(val == ''){
+			 $("#idNumberError").show();
+			 $("#idNumberError").html("Id Number<b> is Required</b>");
+			 $("#idNumberError").css("color","red");
+			 idNumberError=false;
+		    }
+		  else{
+			  $("#idNumberError").hide();
+			  idNumberError=true;
+		   }
+		   return idNumberErrors;
+	}
+	/*function validate_ifOther(){
+		 var val= $("#ifOther").val();
+		 if(val==''){
+			 $("#ifOtherError").show();
+			 $("#ifOtherError").html("Other<b> Id is Required</b>");
+			 $("#ifOtherError").css("color","red");
+			 ifOtherError=false;
+		    }
+		  else{
+			  $("#ifOtherError").hide();
+			  ifOtherError=true;
+		   }
+		   return ifOtherError;
+	   }*/
+   
+	
+	//validate for Autofill
+	$('input[type="radio"][name="userType"]').change(function(){
+		autoFillUserFor();
+	})
+function autoFillUserFor(){
+	var val=$('input[type="radio"][name="userType"]:checked').val();
+	if(val == 'Vendor'){
+		$("#userFor").val('Purchase');
+	}
+	else if(val=='Customer'){
+		$("#userFor").val('Sale');
+	}
+}
+	//ifOtherText Input
+	$("#userIdType").change(function(){
+		var val=$("#userIdType").val();
+		
+		if(val == 'Other'){
+			$("#ifOther").removeAttr("readOnly");
+		}
+		else{
+			$("#ifOther").attr("readOnly","true");
+			$("#ifOther").val("");
+		}
+		
+	
+	})
+	
+	 $("#whUserForm").submit(function(){
+		   validate_userType();
+			validate_userCode();
+			validate_userEmail();
+			validate_userContact();
+			validate_userIdType();
+			//validate_idNumber();
+			//validate_ifOther()
+			 
+		if(userTypeError && userCodeError && userEmailError && userContactError && userIdTypeError && idNumberError)
+			return true;
+		else
+			return false; 
+		})
+	
+})
+</script>
+</body>
+</html>

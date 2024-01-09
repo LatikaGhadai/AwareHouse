@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery  .slim-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="fragments/commonui :: usermenu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h3>SALE ORDER REGISTER</h3>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/saleOrder/save}" method="POST"
+					id="saleOrderForm" th:object="${saleOrder}">
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="orderCode">Order Code</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{orderCode}" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="orderCodeError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#2-->
+					<div class="row">
+						<div class="col-2">
+							<label>Shipment Code</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{shipmentType.id}" id="shipmentType"class="form-control">
+							  <option value="">-Select</option>
+							  <option th:each="ob:${shipmentTypes}" th:value="${ob.key}" th:text="${ob.value}"></option>
+							</select>
+						</div>
+						<div class="col-6">
+							<span id="shipmentCodeError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#2 -->
+					<div class="row">
+						<div class="col-2">
+							<label>Customer</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{customer.id}" class="form-control">
+							  <option value="">-Select-</option>
+							  <option th:each="ob:${whUsertypes}" th:value="${ob.key}" th:text="${ob.value}"></option>
+							</select>
+						</div>
+						<div class="col-6">
+							<span id="vendorTypeError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="referenceNo">Reference no</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{referenceNo}" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="referenceNoError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="stockMode">Stock mode</label>
+						</div>
+						<div class="col-4">
+							<input type="radio" th:field="*{stockMode}" value="Grade">Grade
+							<input type="radio" th:field="*{stockMode}" value="Margin">Margin
+						</div>
+						<div class="col-6">
+							<span id="stockModeError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="stockSource">STOCK SOURCE</label>
+						</div>
+						<div class="col-4">
+						    <select th:field="*{stockSource}" class="form-control">
+						      <option value="">-Select-</option>
+						      <option value="Open">Open</option>
+						      <option value="Avail">Avail</option>
+						      <option value="Refund">Refund</option>
+						    </select>
+						</div>
+						<div class="col-6">
+							<span id="stockSourceError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="status">STATUS</label>
+						</div>
+						<div class="col-4">
+						   <input type="text" th:field="*{status}" th:value="${saleOrder.setStatus('SALE-OPEN')}" 
+						    readonly="readonly" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="statusError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#5 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="description">Description</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{description}" class="form-control"></textarea>
+						</div>
+						<div class="col-6">
+							<span id="descriptionError"></span>
+						</div>
+					</div>
+					<br>
+					<input type="submit" class="btn btn-success"
+						value="Order" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+  $(document).ready(function(){
+	  $("#orderCodeError").hide();
+	  $("#referenceNoError").hide();
+	  $("#stockModeError").hide();
+	  $("#stockSourceError").hide();
+	  $("#descriptionError").hide();
+	  
+ 
+	  var orderCodeError=false;
+	  var referenceNoError=false;
+	  var stockModeError=false;
+	  var stockSourceError=false
+      var descriptionError=false
+
+	  $("#orderCode").keyup(function(){
+		  validate_orderCode();
+		});
+
+     $("#referenceNo").keyup(function(){
+		  validate_referenceNo();
+		});
+
+	$('input[type="radio"][name="stockMode"]').change(function(){
+		validate_stockMode();
+	   });
+	
+	$("#stockSource").change(function(){
+		validate_stockSource();
+	   });
+	$("#description").keyup(function(){
+		  validate_description();
+		});
+
+     function validate_orderCode(){
+		 var val=$("#orderCode").val();
+		 if(val==''){
+			 $("#orderCodeError").show();
+			 $("#orderCodeError").html("Order code<b> is Required<b>");
+             $("#orderCodeError").css("color","red");
+             orderCodeError=false;
+          }
+		  else {
+			  $("#orderCodeError").hide();
+			  orderCodeError=true;    
+            }
+         return orderCodeError;
+	 }
+   function validate_referenceNo(){
+		 var val=$("#referenceNo").val();
+		 if(val==''){
+			 $("#referenceNoError").show();
+			 $("#referenceNoError").html("Reference No<b> is Required<b>");
+             $("#referenceNoError").css("color","red");
+             referenceNoError=false;
+          }
+		  else {
+			  $("#referenceNoError").hide();
+			  referenceNoError=true;    
+            }
+         return referenceNoError;
+	 }
+	  function validate_stockMode(){
+		  var len=$('input[type="radio"][name="stockMode"]:checked').length;
+		 if(len==''){
+			 $("#stockModeError").show();
+			 $("#stockModeError").html("choose<b> Stock Mode<b>");
+             $("#stockModeError").css("color","red");
+             stockModeError=false;
+          }
+		  else {
+			  $("#stockModeError").hide();
+			  stockModeError=true;    
+            }
+         return stockModeError;
+	 }
+
+	 function validate_stockSource(){
+		 var val=$("#stockSource").val();
+		 if(val==''){
+			 $("#stockSourceError").show();
+			 $("#stockSourceError").html("Select<b> Stock Source<b>");
+             $("#stockSourceError").css("color","red");
+             stockSourceError=false;
+          }
+		  else {
+			  $("#stockSourceError").hide();
+			  stockSourceError=true;    
+            }
+         return stockSourceError;
+	 }
+	 function validate_description(){
+		 var val=$("#description").val();
+		 if(val.length<5 || val.length>150){
+			 $("#descriptionError").show();
+			 $("#descriptionError").html("Must be<b> 10-150 character Only<b>");
+             $("#descriptionError").css("color","red");
+			 descriptionError=false;
+          }
+		  else {
+			  $("#descriptionError").hide();
+			  descriptionError=true;    
+            }
+         return descriptionError;
+	 }
+	//---On Submit--//
+	   $("#saleOrderForm").submit(function(){
+			validate_orderCode();
+			validate_referenceNo();
+			validate_stockMode();
+			validate_stockSource();
+			validate_description();
+			 
+		if(orderCodeError && referenceNoError && stockModeError && stockSourceError && descriptionError)
+			return true;
+		else
+			return false; 
+	 })
+ });
+  </script>
+</body>
+</html>

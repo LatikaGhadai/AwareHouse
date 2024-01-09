@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery  .slim-->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h3>SALE ORDER EDIT</h3>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/saleOrder/update}" method="POST"
+					id="saleOrderForm" th:object="${saleOrder}">
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label>Order ID</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{id}" readonly="readonly" class="form-control">
+						</div>
+						<div class="col-6">
+							
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="orderCode">Order Code</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{orderCode}" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="orderCodeError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="referenceNo">Reference no</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{referenceNo}" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="referenceNoError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="stockMode">Stock mode</label>
+						</div>
+						<div class="col-4">
+							<input type="radio" th:field="*{stockMode}" value="Grade">Grade
+							<input type="radio" th:field="*{stockMode}" value="Margin">Margin
+						</div>
+						<div class="col-6">
+							<span id="stockModeError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="stockSource">STOCK SOURCE</label>
+						</div>
+						<div class="col-4">
+						    <select th:field="*{stockSource}" class="form-control">
+						      <option value="">-Select-</option>
+						      <option value="Open">Open</option>
+						      <option value="Avail">Avail</option>
+						      <option value="Refund">Refund</option>
+						    </select>
+						</div>
+						<div class="col-6">
+							<span id="stockSourceError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="status">STATUS</label>
+						</div>
+						<div class="col-4">
+						   <input type="text" th:field="*{status}" th:value="${saleOrder.setStatus('SALE-OPEN')}" 
+						    readonly="readonly" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="statusError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- row#5 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="description">Description</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{description}" class="form-control"></textarea>
+						</div>
+						<div class="col-6">
+							<span id="descriptionError"></span>
+						</div>
+					</div>
+					<br>
+					<input type="submit" class="btn btn-success"
+						value="Update" />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

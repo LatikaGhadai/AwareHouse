@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="fragments/commonui :: usermenu"></div>
+<div class="container">
+<div class="card">
+  <div class="card-header bg-primary text-white text-center">
+    <h3>PURCHER ORDER DATA PAGE</h3>
+  </div>
+  <div class="card-body">
+    <a th:href="@{/purchaseOrd/excel}"><img th:src="@{/images/excel1.png}" width="30" height="30"></a>
+    <a th:href="@{/purchaseOrd/pdf}"><img th:src="@{/images/pdf1.jpeg}" width="30" height="30"></a>
+    
+    <table class="table bg-dark text-white">
+      <tr bgcolor="Green">
+        <th>ORDER ID</th> 
+        <th>ORDER CODE</th>
+        <th>STATUS</th>
+        <th>SHIPMENT TYPE</th>
+        <th>VENDOR</th>
+        <th>REFERENCE NO</th>
+        <th>QWALITY CHECK</th>
+       <!--  <th>DEFAULT STATUS</th> -->
+        <th>DESCRIPTION</th>
+        <th>OPERATION</th>
+        
+      </tr>
+      <tr th:each="ob:${list}">
+        <td th:text="${ob.id}"></td>
+        <td th:text="${ob.orderCode}"></td>
+        <td th:text="${ob.defaultStatus}" class="text-info"></td>
+        <td th:text="${ob.shipmentType.shipmentCode}"></td>
+        <td th:text="${ob.vendor.userCode}"></td>
+        <td th:text="${ob.referenceNo}"></td>
+        <td th:text="${ob.qualityCheck}"></td>
+        <!-- <td th:text="${ob.defaultStatus}"></td> -->
+        <td th:text="${ob.description}"></td>
+        <td><a th:href="@{/purchaseOrd/delete/{id}(id=${ob.id})}" class="btn btn-danger"><img th:src="@{/images/delete.jpg}" width="20" height="20"></a>
+             <a th:href="@{/purchaseOrd/edit/{id}(id=${ob.id})}" class="btn btn-success"><img th:src="@{/images/edit1.png}" width="20" height="20"></a>
+             <a th:href="@{/purchaseOrd/view/{id}(id=${ob.id})}" class="btn btn-info"><img th:src="@{/images/view.png}" width="20" height="20"></a>
+             <a th:href="@{/purchaseOrd/excel/{id}(id=${ob.id})}" class="btn btn-info"><img th:src="@{/images/excel2.jpeg}" width="20" height="20"></a>
+             <a th:href="@{/purchaseOrd/pdf/{id}(id=${ob.id})}" class="btn btn-info"><img th:src="@{/images/pdf.png}" width="20" height="20"></a>
+              <a th:href="@{/purchaseOrd/partDtls/{id}(id=${ob.id})}" class="btn btn-info">Parts</a>
+              <a th:href="@{/purchaseOrd/partDtls2/{id}(id=${ob.id})}" class="btn btn-info">Part2</a></td>
+         
+         <td><div th:switch="${ob.defaultStatus}">
+               <span th:case="${'ORDERED'}">
+                  <a th:href="@{/purchaseOrd/invoice/{id}(id=${ob.id})}" class="btn btn-success">Generate Invoice</a>
+               </span>
+               <span th:case="${'INVOICED'}">
+                  <a th:href="@{/purchaseOrd/printInVoice/{id}(id=${ob.id})}" class="btn btn-success">Print invoice</a>
+               </span>
+               
+                <span th:case="${'PICKING'}">
+                  <b>UNDER SELECTION</b>
+               </span>
+               <span th:case="${'OPEN'}">
+                  <b>ITEM TO BE ADDED</b>
+               </span> 
+             </div>
+         </td>
+              
+       </tr>
+    </table>     
+  </div> 
+  <!-- <div th:if="${message!=null}"> -->
+  <div>
+    <a th:href="@{/purchaseOrd/register}" class="btn btn-dark bg-light text-primary"><-Home</a>
+  </div>
+    
+    <div class="card-footer bg-info text-white text-center">
+      <!-- <b><span th:text="${message}"></span></b>
+    </div> -->
+  </div>
+  </div>
+  </div>
+</body>
+</html>

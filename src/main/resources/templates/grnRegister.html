@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="fragments/commonui :: usermenu"></div>
+<div class="container">
+  <div class="card">
+    <div class="card-header bg-primary text-white text-center">
+      <h3>GRN REGISTER PAGE</h3>
+    </div>
+    <div class="card-body">
+    <form id="GRNForm" th:action="@{/grn/save}" method="POST"  th:object="${grn}">
+       <div class="row">
+          <!-- Row#1 -->
+          <div class="col-2">
+            <label for="grnCode">Grn Code</label>
+          </div>
+          <div class="col-4">
+            <input type="text" th:field="*{grnCode}" class="form-control">
+          </div>
+          <div class="col-6">
+            <span id="grnCodeError"></span>
+          </div>
+         </div>
+         <br>
+         
+       <div class="row">
+          <!-- Row#2 -->
+          <div class="col-2">
+            <label for="grnType">Grn Type</label>
+          </div>
+          <div class="col-4">
+            <input type="text" th:field="*{grnType}" class="form-control">
+          </div>
+          <div>
+            <span id="grnTypeError"></span>
+          </div>
+        </div>
+        <br>
+        
+        <div class="row">
+          <!-- Row#2 -->
+          <div class="col-2">
+            <label>Order Code</label>
+          </div>
+          <div class="col-4">
+            <select th:field="*{po.id}" class="form-control">
+              <option value="">-select-</option>
+              <option th:each="ob:${pos}" th:value="${ob.key}" th:text="${ob.value}"></option>
+            </select>
+          </div>
+          <div>
+            <span id="orderCodeError"></span>
+          </div>
+        </div>
+        <br>
+        
+        <div class="row">
+          <!-- Row#3 -->
+          <div class="col-2">
+            <label for="description">Description</label>
+          </div>
+          <div class="col-4">
+            <textarea th:field="*{description}" class="form-control"></textarea>
+          </div>
+          <div class="col-6">
+            <span id="descriptionError"></span>
+          </div>
+        </div>
+        <input type="submit" class="btn btn-success" value="Register"/>
+        </form>
+    </div>
+    <div class="card-footer bg-info text-white text-center">
+      <b><span th:text="${message}"></span></b>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#grnCodeError").hide();
+		$("#grnTypeError").hide();
+		$("#descriptionError").hide();
+		
+		var grnCodeError =false; 
+	    var grnTypeError=false;
+		var descriptionError=false;
+
+		$("#grnCode").keyup(function(){
+			validate_grnCode();
+		   });
+		$("#grnType").keyup(function(){
+			validate_grnType();
+		  });
+
+	   $("#description").keyup(function(){
+			validate_description();
+		  });
+
+	   function validate_grnCode(){
+		     var val=$("#grnCode").val();
+			 if(val==''){
+				 $("#grnCodeError").show();
+				 $("#grnCodeError").html("GRN Code<b> is Required</b>");
+				 $("#grnCodeError").css("color","red");
+				 grnCodeError=false;
+			    }
+			  else{
+				  $("#grnCodeError").hide();
+				  grnCodeError=true;
+			   }
+			   return grnCodeError;
+		   }
+	   function validate_grnType(){
+		     var val=$("#grnType").val();
+			 if(val==''){
+				 $("#grnTypeError").show();
+				 $("#grnTypeError").html("GRN Type<b> is Required</b>");
+				 $("#grnTypeError").css("color","red");
+				 grnTypeError=false;
+			    }
+			  else{
+				  $("#grnTypeError").hide();
+				  grnTypeError=true;
+			   }
+			   return grnTypeError;
+		   }
+	
+	   function validate_description(){
+		     var val=$("#description").val();
+			 if(val.length<5 || val.length>150){
+				 $("#descriptionError").show();
+				 $("#descriptionError").html("Must be<b> 5-150 character Only<b>");
+				 $("#descriptionError").css("color","red");
+				 descriptionError=false;
+			    }
+			  else{
+				  $("#descriptionError").hide();
+				  descriptionError=true;
+			   }
+			   return descriptionError;
+		   }
+	   
+	   //---On Submit--//
+	   $("#GRNForm").submit(function(){
+			validate_grnCode();
+			validate_grnType();
+			validate_description();
+			 
+		if(grnCodeError && grnTypeError && descriptionError)
+			return true;
+		else
+			return false; 
+		})
+	})
+</script>
+</body>
+</html>

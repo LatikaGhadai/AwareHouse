@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery  .slim-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div th:insert="fragments/commonui :: usermenu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h3>PURCHER ORDER REGISTER</h3>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/purchaseOrd/save}" method="POST"
+					id="purchaseOrderForm" th:object="${purchaseOrder}">
+					<!-- row#1 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="orderCode">Order Code</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{orderCode}" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="orderCodeError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- Integration -->
+					<!-- row#2 -->
+					<div class="row">
+						<div class="col-2">
+							<label>Shipment Code</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{shipmentType.id}" id="shipmentType" class="form-control">
+							  <option value="">-Select-</option>
+							  <option th:each="ob:${shipmentTypes}" th:value="${ob.key}" th:text="${ob.value}"></option>
+							</select>
+						</div>
+						<div class="col-6">
+							<span id="shipmentTypeError"></span>
+						</div>
+					</div>
+					<br>
+					
+					<!-- Integration -->
+					<!-- row#2 -->
+					<div class="row">
+						<div class="col-2">
+							<label>Vendor</label>
+						</div>
+						<div class="col-4">
+							<select th:field="*{vendor.id}" id="vendor" class="form-control">
+							  <option value="">-Select-</option>
+							  <option th:each="ob:${whUsertypes}" th:value="${ob.key}" th:text="${ob.value}"></option>
+							</select>
+						</div>
+						<div class="col-6">
+							<span id="vendorTypeError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- row#3 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="referenceNo">Reference No</label>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{referenceNo}" class="form-control">
+						</div>
+						<div class="col-6">
+							<span id="referenceNoError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- row#3 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="qualityCheck">Quality Check</label>
+						</div>
+						<div class="col-4">
+							<input type="radio" th:field="*{qualityCheck}" value="Required">Required
+							<input type="radio" th:field="*{qualityCheck}"
+								value="Not Required">Not Require
+						</div>
+						<div class="col-6">
+							<span id="qualityCheckError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- row#4 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="defaultStatus">Default Status</label>
+						</div>
+						<div class="col-4">
+							<!--<select th:field="*{defaultStatus}">
+								<option th:value="OPEN" th:text="Open"></option>
+							</select>-->
+							  <input type="text" th:field="*{defaultStatus}" th:value="${purchaseOrder.setDefaultStatus('OPEN')}" readonly="readonly" class="form-control"> 
+						</div>
+						<div class="col-6">
+							<span id="defaultStatusError"></span>
+						</div>
+					</div>
+					<br>
+					<!-- row#5 -->
+					<div class="row">
+						<div class="col-2">
+							<label for="description">Description</label>
+						</div>
+						<div class="col-4">
+							<textarea th:field="*{description}" class="form-control"></textarea>
+						</div>
+						<div class="col-6">
+							<span id="descriptionError"></span>
+						</div>
+					</div>
+					<br> <input type="submit" class="btn btn-success"
+						value="Order" />
+				</form>
+			</div>
+			<div th:if="${message!=0}">
+				<div class="card-footer bg-info text-white text-center">
+					<b><span th:text="${message}"></span></b>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#orderCodeError").hide();
+		$("#referenceNoError").hide();
+		$("#qualityCheckError").hide();
+		$("#descriptionError").hide();
+		
+		var orderCodeError =false; 
+		var referenceNoError=false;
+	    var partLengthError=false;
+		var descriptionError=false;
+
+		$("#orderCode").keyup(function(){
+			validate_orderCode();
+		   });
+		$("#referenceNo").keyup(function(){
+			validate_referenceNo();
+		  });
+
+	   $("#qualityCheck").change(function(){
+			validate_qualityCheck();
+		   });
+	   $("#description").keyup(function(){
+			validate_description();
+		  });
+
+	   function validate_orderCode(){
+		     var val=$("#orderCode").val();
+			 if(val==''){
+				 $("#orderCodeError").show();
+				 $("#orderCodeError").html("OrderCode<b> is Required</b>");
+				 $("#orderCodeError").css("color","red");
+	             partCodeError=false;
+			    }
+			  else{
+				  $("#orderCodeError").hide();
+				  orderCodeError=true;
+			   }
+			   return orderCodeError;
+		   }
+	   function validate_referenceNo(){
+		     var val=$("#referenceNo").val();
+			 if(val==''){
+				 $("#referenceNoError").show();
+				 $("#referenceNoError").html("Reference<b> is Number Required</b>");
+				 $("#referenceNoError").css("color","red");
+	             partCodeError=false;
+			    }
+			  else{
+				  $("#referenceNoError").hide();
+				  referenceNoError=true;
+			   }
+			   return referenceNoError;
+		   }
+	   function validate_qualityCheck(){
+		     var len = $('input[type="radio"][name="qualityCheck"]:checked').length;
+			 if(len == 0){
+				 $("#qualityCheckError").show();
+				 $("#qualityCheckError").html("Choose<b> One Qulity</b>");
+				 $("#qualityCheckError").css("color","red");
+				 qualityCheckError=false;
+			    }
+			  else{
+				  $("#qualityCheckError").hide();
+				  qualityCheckError=true;
+			   }
+			   return qualityCheckError;
+		   }
+	   function validate_description(){
+		     var val=$("#description").val();
+			 if(val.length<5 || val.length>150){
+				 $("#descriptionError").show();
+				 $("#descriptionError").html("Must be<b> 5-150 character Only<b>");
+				 $("#descriptionError").css("color","red");
+				 descriptionError=false;
+			    }
+			  else{
+				  $("#descriptionError").hide();
+				  descriptionError=true;
+			   }
+			   return descriptionError;
+		   }
+	   
+	   //---On Submit--//
+	   $("#purchaseOrderForm").submit(function(){
+			validate_orderCode();
+			validate_referenceNo();
+			validate_qualityCheck();
+			validate_description();
+			 
+		if(orderCodeError && referenceNoError && qualityCheckError && descriptionError)
+			return true;
+		else
+			return false; 
+		})
+	})
+</script>
+</body>
+</html>

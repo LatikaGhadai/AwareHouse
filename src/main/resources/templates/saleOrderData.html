@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery  .slim-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="fragments/commonui :: usermenu"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h3>SALE ORDER DATA</h3>
+			</div>
+			<div class="card-body">
+			<a th:href="@{/saleOrder/excel}" class="btn btn-info">Excel Export</a>
+			<a th:href="@{/saleOrder/pdf}" class="btn btn-info">PDF</a>
+				<!-- <form th:action="@{/saleOrder/update}" method="POST"
+					id="saleOrderForm" th:object="${saleOrder}"> </form> -->
+					
+				<table class="table bg-dark text-white">
+				  <tr bgcolor="green">
+				    <th>ID</th>
+				    <th>CODE</th>
+				    <th>SHIPMENT TYPE</th>
+                    <th>CUSTOMER</th>
+				    <th>STOCK MODE</th>
+				    <th>REFERENCE NO</th>
+				    <th>STOCK SOURCE</th>
+				    <th>STATUS</th>
+				    <th>OPERATION</th>
+				  </tr>
+				  <tr th:each="ob:${list}">
+				    <td th:text="${ob.id}"></td>
+				    <td th:text="${ob.orderCode}"></td>
+				    <td th:text="${ob.shipmentType.shipmentCode}"></td>
+				    <td th:text="${ob.customer.userCode}"></td>
+				    <td th:text="${ob.stockMode}"></td>
+				    <td th:text="${ob.referenceNo}"></td>
+				    <td th:text="${ob.stockSource}"></td>
+				    <td th:text="${ob.status}"></td>
+				    <td><a th:href="@{/saleOrder/delete/{id}(id=${ob.id})}" class="btn btn-danger">Delete</a>
+				        <a th:href="@{/saleOrder/edit/{id}(id=${ob.id})}" class="btn btn-success">Edit</a>
+				        <a th:href="@{/saleOrder/view/{id}(id=${ob.id})}" class="btn btn-info">View</a>
+				        <a th:href="@{/saleOrder/excel/{id}(id=${ob.id})}" class="btn btn-info">Excel</a>
+				        <a th:href="@{/saleOrder/pdf/{id}(id=${ob.id})}" class="btn btn-danger">PDF</a>  
+				        <a th:href="@{/saleOrder/itemDtls/{id}(id=${ob.id})}" class="btn btn-secondary">Item</a>
+				     </td>
+				  </tr>
+				</table>	
+			</div>
+			<div th:if="${message!=null}">
+               <div class="card-footer bg-info text-white text-center">
+           <b><span th:text="${message}"></span></b>
+               </div>
+            </div>
+		</div>
+	</div>
+</body>
+</html>

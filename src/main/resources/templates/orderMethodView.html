@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<body>
+<h3 style="color: red">ORDER METHOD VIEW PAGE</h3>
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <td th:text="${ob.id}"></td>
+    </tr>
+    <tr>
+      <th>MODE</th>
+      <td th:text="${ob.orderMode}"></td>
+    </tr>
+    <tr>
+      <th>CODE</th>
+      <td th:text="${ob.orderCode}"></td>
+    </tr>
+    <tr>
+      <th>TYPE</th>
+      <td th:text="${ob.orderType}"></td>
+    </tr>
+    <tr>
+      <th>ACCEPT</th>
+      <td th:text="${ob.orderAccept}"></td>
+    </tr>
+    <tr>
+      <th>DESCRIPTION</th>
+      <td th:text="${ob.description}"></td>
+    </tr>
+  </table>
+ </body>
+</html>

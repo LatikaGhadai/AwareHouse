@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="card">
+  <div class="card-header bg-primary text-white text-center">
+    <h3>PURCHER ORDER View PAGE</h3>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <tr>
+        <th>ID</th> 
+        <td th:text="${ob.id}"></td>
+      </tr>
+       <tr>
+        <th>ORDER CODE</th> 
+        <td th:text="${ob.orderCode}"></td>
+      </tr>
+      <tr>
+        <th>REFERENCE NO</th> 
+        <td th:text="${ob.referenceNo}"></td>
+      </tr>
+       <tr>
+        <th>QUALITY CHECK</th> 
+        <td th:text="${ob.qualityCheck}"></td>
+      </tr>     
+    </table>     
+  </div> 
+  <div th:if="${message!=null}">
+    <div class="card-footer bg-info text-white text-center">
+     <b><span th:text="${message}"></span></b>
+    </div>
+  </div>
+  </div>
+  </div>
+</body>
+</html>

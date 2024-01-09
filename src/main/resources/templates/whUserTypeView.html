@@ -1,0 +1,83 @@
+<!--<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<body>
+<h3 style="color: red">WH USER VIEW PAGE</h3>
+ <table border="1" bgcolor="pink">
+ <tr>
+      <th>TYPE</th>
+      <td th:text="${ob.userType}"></td>
+    </tr>
+     <tr>
+      <th>ID</th>
+      <td th:text="${ob.id}"></td>
+    </tr>
+    <tr>
+      <th>TYPE</th>
+      <td th:text="${ob.userType}"></td>
+    </tr>
+    <tr>
+      <th>MAIL Id</th>
+      <td th:text="${ob.userEmail}"></td>
+    </tr>
+    <tr>
+      <th>ID NUMBER</th>
+      <td th:text="${ob.idNumber}"></td>
+    </tr> 
+  </table>
+ </body>
+</html>-->
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Js, properJs and Jquery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="card">
+  <div class="card-header bg-primary text-white text-center">
+    <h3 style="color: red">WH USER VIEW PAGE</h3>
+  </div>
+  <div class="card-body">
+
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <td th:text="${ob.id}"></td>
+    </tr>
+    <tr>
+    <th>TYPE</th>
+      <td th:text="${ob.userType}"></td>
+    </tr>
+    <tr>
+    <th>CODE</th>
+      <td th:text="${ob.userCode}"></td>
+    </tr>
+    <tr>
+    <th>EMAIL ID</th>
+      <td th:text="${ob.userEmail}"></td>
+    </tr>
+    <tr>
+    <th>CONTACT</th>
+      <td th:text="${ob.userContact}"></td>
+    </tr>
+    <tr>
+    <th>ID NUMBER</th>
+      <td th:text="${ob.idNumber}"></td>
+    </tr>
+  </table>
+  <div class="card-footer bg-info text-white text-center">
+  </div>
+  </div>
+</div>
+</body>
+</html>
